@@ -1,0 +1,615 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Liar Within</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="responsive.css" />
+</head>
+<body>
+  <main class="hero-screen">
+    <div class="sky-layer"></div>
+    <div class="sun"></div>
+    <div class="moon"></div>
+
+    <!-- Nuvens -->
+    <div class="clouds-hero">
+      <div class="cloud-hero cloud-hero-1"></div>
+      <div class="cloud-hero cloud-hero-2"></div>
+      <div class="cloud-hero cloud-hero-3"></div>
+      <div class="cloud-hero cloud-hero-4"></div>
+      <div class="cloud-hero cloud-hero-5"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="language-switcher">
+        <button id="lang-pt" class="lang-button active" type="button">PT</button>
+        <button id="lang-en" class="lang-button" type="button">ENG</button>
+      </div>
+      <h1 id="game-title" class="title" data-i18n="gameTitle" data-text="A Liar Within">A Liar Within</h1>
+      <button id="play-button" class="play-button" data-i18n="play">Jogar</button>
+      <p class="subtitle" data-i18n="subtitle">Can you find the escape route?</p>
+    </div>
+  </main>
+
+  <section class="login-screen hidden" id="login-screen">
+    <div class="universe-backdrop">
+      <div class="stars" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="login-panel">
+        <div class="panel-badge" data-i18n="loginBadge">Portões de Berlim</div>
+        <h2 data-i18n="loginTitle">Documentação do cidadão</h2>
+        <p data-i18n="loginDescription">Sua documentação é necessária, porfavor insira seu nome.</p>
+
+        <div class="player-input">
+          <input id="player-name-input" class="text-input" type="text" placeholder="Nome do cidadão" data-i18n-placeholder="playerNamePlaceholder" />
+        </div>
+
+        <div class="room-input">
+          <input id="room-code-input" class="text-input" type="text" placeholder="Código dos portões (opcional)" data-i18n-placeholder="roomCodePlaceholder" maxlength="6" />
+        </div>
+
+        <button id="enter-city-button" class="action-button" data-i18n="enterCity">Entrar na cidade</button>
+
+        <div id="room-info-block" class="code-block hidden">
+          <span class="code-label" data-i18n="roomOpen">Portão aberto</span>
+          <div id="room-code" class="room-code">----</div>
+        </div>
+
+        <p id="status-text" class="status-text" data-i18n="statusWaiting">Seu portão será criado assim que você entrar.</p>
+        <button id="audio-permission-button" class="audio-control-button" title="Ativar som" aria-label="Ativar som" data-i18n="audioButton">Som</button>
+        <button id="back-button" class="text-button" data-i18n="back">Voltar</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="city-screen hidden" id="city-screen">
+    <div class="city-backdrop">
+      <div class="sunset-sky"></div>
+      <div class="sunset-sun"></div>
+      <div class="city-buildings" id="city-buildings">
+        <!-- Casas dos jogadores serão adicionadas dinamicamente aqui -->
+      </div>
+      <div class="city-ui">
+        <div class="city-header">
+          <div class="room-info">
+            <span class="room-label" data-i18n="roomLabel">Sala:</span>
+            <span id="current-room-code" class="current-room-code">----</span>
+          </div>
+          <div class="players-count">
+            <span class="players-label" data-i18n="playersLabel">Jogadores:</span>
+            <span id="players-count" class="players-count-number">1</span>
+            <span class="players-max">/30</span>
+          </div>
+        </div>
+        
+        <div class="city-status" id="game-status">
+          <p data-i18n="waitingPlayers">Aguardando pelo menos 4 jogadores para começar...</p>
+        </div>
+
+        <div class="city-buttons">
+          <button id="ready-button" class="start-button" data-i18n="readyCount">Pronto (0/1)</button>
+          <button id="lobby-audio-button" class="audio-control-button" title="Ativar som" aria-label="Ativar som" data-i18n="audioButton">Som</button>
+          <button id="leave-city-button" class="leave-button" data-i18n="leaveCity">Sair da cidade</button>
+          <button id="tv-mode-button" class="start-button hidden">Conectar à TV</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tela de Corrupção -->
+  <section class="corruption-screen hidden" id="corruption-screen">
+    <div class="corruption-effect"></div>
+    <div class="glitch-text">
+      01010011 01100101 00100000 01101110 11000011 10100011 01101111 00100000 01110000 01101111 01110011 01110011 01101111 00100000 01110100 01110010 01100001 01111010 11000011 10101010 00101101 01101100 01100001 00100000 01100100 01100101 00100000 01110110 01101111 01101100 01110100 01100001 00101110 00101110 00101110 00100000 01110000 01101111 01110011 01110011 01101111 00100000 01101100 01100101 01110110 01100001 01110010 00101101 01110110 01101111 01110011 00100000 01100001 01110100 11000011 10101001 00100000 01100101 01101100 01100001
+    </div>
+    <div id="corruption-message" class="corruption-message" data-i18n="corruptionMessage">O sistema está corrompido... Prepare-se para a revelação de papéis.</div>
+  </section>
+
+  <!-- Tela com Nuvens e Dia Ensolarado -->
+  <section class="sky-intro-screen hidden" id="sky-intro-screen">
+    <div class="daytime-sky"></div>
+    <div class="clouds-container">
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+      <div class="cloud cloud-3"></div>
+    </div>
+    <div class="sun-intro"></div>
+  </section>
+
+  <!-- Tela da Cidade de Dia com Jogadores -->
+  <section class="game-screen hidden" id="game-screen">
+    <div class="day-city-sky"></div>
+    <div class="day-city-buildings">
+      <div class="day-building"></div>
+      <div class="day-building"></div>
+      <div class="day-building"></div>
+      <div class="day-building"></div>
+      <div class="day-building"></div>
+    </div>
+    <div class="game-ui">
+      <div class="players-list" id="players-list">
+        <!-- Nomes dos jogadores serão adicionados dinamicamente -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Tela de Revelação de Role -->
+  <section class="role-reveal-screen hidden" id="role-reveal-screen">
+    <div class="role-reveal-bg" id="role-reveal-bg"></div>
+    <div class="role-reveal-content">
+      <div class="role-reveal-inner">
+        <div class="role-reveal-panel">
+          <div class="role-reveal-title" data-i18n="roleRevealTitle">Seu Role:</div>
+          <div class="role-reveal-badge" id="role-badge">INOCENTE</div>
+          <div class="role-reveal-description" id="role-description" data-i18n="roleRevealDescription">
+            Você é um civil. Trabalhe com sua equipe para encontrar o assassino.
+          </div>
+        </div>
+      </div>
+      <button id="role-ready-button" class="role-ready-button" data-i18n="ready">Pronto</button>
+    </div>
+  </section>
+
+  <!-- Tela de Noite -->
+  <section class="night-screen hidden" id="night-screen">
+    <div class="night-overlay"></div>
+    <div class="night-content">
+      <div class="night-title" data-i18n="nightTitle">A CIDADE DORME...</div>
+      <div class="night-message" id="night-message" data-i18n="nightMessage">Aguarde enquanto o ciclo noturno começa...</div>
+    </div>
+  </section>
+
+  <!-- Tela do Assassino -->
+  <section class="assassin-screen hidden" id="assassin-screen">
+    <div class="night-overlay"></div>
+    <div class="assassin-content">
+      <div class="assassin-title" data-i18n="assassinTitle">ASSASSINO</div>
+      <div class="assassin-subtitle" data-i18n="assassinSubtitle">Escolha sua vítima:</div>
+      <div class="players-grid" id="assassin-players">
+        <!-- Botões de jogadores serão adicionados dinamicamente -->
+      </div>
+      <div class="assassin-buttons">
+        <button id="assassin-skip-button" class="assassin-skip-button" data-i18n="skipNight">Não matar esta noite</button>
+        <button id="assassin-confirm-button" class="assassin-confirm-button" disabled data-i18n="confirm">Confirmar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tela do Traidor -->
+  <section class="traitor-screen hidden" id="traitor-screen">
+    <div class="night-overlay"></div>
+    <div class="traitor-content">
+      <div class="traitor-title" data-i18n="traitorTitle">TRAIDOR</div>
+      <div class="traitor-subtitle" data-i18n="traitorSubtitle">Escolha sua vítima:</div>
+      <div class="players-grid" id="traitor-players">
+        <!-- Botões de jogadores serão adicionados dinamicamente -->
+      </div>
+      <div class="traitor-buttons">
+        <button id="traitor-skip-button" class="traitor-skip-button" data-i18n="skipNight">Não matar esta noite</button>
+        <button id="traitor-confirm-button" class="traitor-confirm-button" disabled data-i18n="confirm">Confirmar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tela do Médico -->
+  <section class="doctor-screen hidden" id="doctor-screen">
+    <div class="night-overlay"></div>
+    <div class="doctor-bg" id="doctor-bg"></div>
+    <div class="doctor-content">
+      <div class="doctor-title" data-i18n="doctorTitle">MÉDICO</div>
+      <div class="doctor-subtitle" data-i18n="doctorSubtitle">Escolha quem salvar:</div>
+      <div class="players-grid" id="doctor-players">
+        <!-- Botões de jogadores serão adicionados dinamicamente -->
+      </div>
+      <div class="doctor-buttons">
+        <button id="doctor-skip-button" class="doctor-skip-button" data-i18n="skipDoctor">Não salvar esta noite</button>
+        <button id="doctor-confirm-button" class="doctor-confirm-button" disabled data-i18n="confirm">Confirmar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tela do Detetive -->
+  <section class="detective-screen hidden" id="detective-screen">
+    <div class="night-overlay"></div>
+    <div class="detective-bg" id="detective-bg"></div>
+    <div class="detective-content">
+      <div class="detective-title" data-i18n="detectiveTitle">DETETIVE</div>
+      <div class="detective-instruction" id="detective-instruction" data-i18n="detectiveInstruction">Detetive, comece a investigação</div>
+      <div class="detective-options">
+        <button id="detective-word-test-button" class="detective-option-button">
+          <div class="option-title" data-i18n="detectiveWordTestTitle">Teste da Palavra</div>
+          <div class="option-desc" data-i18n="detectiveWordTestDesc">Todos recebem uma palavra, assassino uma similar</div>
+        </button>
+        <button id="detective-percentage-test-button" class="detective-option-button">
+          <div class="option-title" data-i18n="detectivePercentageTestTitle">Teste da Porcentagem</div>
+          <div class="option-desc" data-i18n="detectivePercentageTestDesc">Mostra suspeitas de assassinato por jogador</div>
+        </button>
+        <button id="detective-notify-button" class="detective-option-button">
+          <div class="option-title" data-i18n="detectiveNotifyTitle">Notificar Investigação</div>
+          <div class="option-desc" data-i18n="detectiveNotifyDesc">Notificar alguém que está sob suspeita</div>
+        </button>
+      </div>
+      <button id="detective-done-button" class="detective-done-button" data-i18n="done">Terminei</button>
+    </div>
+  </section>
+
+  <!-- Tela de Teste da Palavra -->
+  <section class="word-test-screen hidden" id="word-test-screen">
+    <div class="test-bg"></div>
+    <div class="word-test-content">
+      <div class="word-test-title" data-i18n="wordTestTitle">PALAVRA DO TESTE</div>
+      <div class="word-display" id="word-display">CARREGANDO...</div>
+      <div class="word-test-instruction" data-i18n="wordTestInstruction">Todos devem clicar em continuar para ir para a discussão.</div>
+      <button id="word-test-continue-button" class="test-submit-button" data-i18n="goToDiscussion">Ir para Discussão</button>
+    </div>
+  </section>
+
+  <!-- Tela de Teste do Detetive -->
+  <section class="detective-test-screen hidden" id="detective-test-screen">
+    <div class="test-bg"></div>
+    <div class="test-content">
+      <div class="test-title" id="test-title" data-i18n="detectiveTestTitle">TESTE DETETIVE</div>
+
+      <!-- Resultados do Teste da Palavra -->
+      <div class="word-test-results hidden" id="word-test-results">
+        <div class="test-result-title" data-i18n="wordTestResultsTitle">Resultado do Teste da Palavra</div>
+        <div class="word-result" id="word-result">Sua palavra: <span id="player-word"></span></div>
+      </div>
+
+      <!-- Resultados do Teste da Porcentagem -->
+      <div class="percentage-test-results hidden" id="percentage-test-results">
+        <div class="test-result-title" data-i18n="percentageTestResultsTitle">Resultado do Teste da Porcentagem</div>
+        <div class="percentage-list" id="percentage-list"></div>
+        <div class="percentage-player-result hidden" id="percentage-player-result"></div>
+      </div>
+
+      <!-- Notificações do Detetive -->
+      <div class="detective-notifications hidden" id="detective-notifications">
+        <div class="notification-alert" data-i18n="detectiveInvestigationAlert">⚠️ Tem alguém te investigando...</div>
+      </div>
+
+      <button id="detective-test-continue-button" class="test-submit-button hidden" data-i18n="continueToDiscussion">Continuar para Discussão</button>
+    </div>
+  </section>
+
+  <!-- Tela de Notificação de Investigação -->
+  <section class="detective-notification-screen hidden" id="detective-notification-screen">
+    <div class="notification-bg"></div>
+    <div class="notification-content">
+      <div class="notification-title" data-i18n="investigationTitle">INVESTIGAÇÃO</div>
+      <div class="notification-message" id="detective-notification-message" data-i18n="detectiveNotificationMessage">Você está sendo investigado pelo Detetive.</div>
+      <button id="detective-notification-continue-button" class="test-submit-button" data-i18n="continue">Continuar</button>
+    </div>
+  </section>
+
+  <!-- Tela de Votação -->
+  <section class="voting-screen hidden" id="voting-screen">
+    <div class="voting-bg"></div>
+    <div class="voting-content">
+      <div class="voting-title" data-i18n="votingTitle">VOTAÇÃO</div>
+      <div class="voting-subtitle" data-i18n="votingSubtitle">Quem deve sair?</div>
+      <div class="vote-counts" id="vote-counts"></div>
+      <div class="players-grid" id="voting-players">
+        <!-- Botões de jogadores serão adicionados dinamicamente -->
+      </div>
+      <div class="voting-buttons">
+        <button id="voting-confirm-button" class="voting-confirm-button" disabled data-i18n="confirmVote">Confirmar Voto</button>
+        <button id="voting-skip-button" class="voting-skip-button" data-i18n="continueDiscussion">Continuar Discussão</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tela de Notificação de Morte -->
+  <section class="death-notification-screen hidden" id="death-notification-screen">
+    <div class="notification-overlay"></div>
+    <div class="notification-content">
+      <div class="notification-title" data-i18n="eliminatedTitle">ELIMINADO</div>
+      <div class="death-player-name" id="death-player-name">Nome do Jogador</div>
+      <div class="death-player-role" id="death-player-role">ERA O ASSASSINO</div>
+      <div class="death-notification-extra" id="death-notification-extra"></div>
+      <button id="death-continue-button" class="death-continue-button" data-i18n="continueToLobby">Continuar para o lobby</button>
+    </div>
+  </section>
+
+  <!-- Tela de Dia/Discussão -->
+  <section class="day-discussion-screen hidden" id="day-discussion-screen">
+    <div class="day-city-sky"></div>
+    <div class="day-city-buildings">
+      <div class="day-building"></div>
+      <div class="day-building"></div>
+      <div class="day-building"></div>
+      <div class="day-building"></div>
+      <div class="day-building"></div>
+    </div>
+    <div class="discussion-ui">
+      <div class="discussion-title" data-i18n="dayDiscussionTitle">DISCUSSÃO DO DIA</div>
+      <div class="players-list-discussion" id="players-list-discussion">
+        <!-- Lista de jogadores vivos -->
+      </div>
+      <div class="discussion-buttons">
+        <button id="continue-button" class="discussion-button" data-i18n="continue">Continuar</button>
+        <button id="voting-button" class="discussion-button voting-action" data-i18n="goToVoting">Ir a Votos</button>
+        <button id="open-secret-chat-button" class="discussion-button secret-chat-button hidden" data-i18n="secretChat">Chat Secreto</button>
+        <button id="open-chat-button" class="discussion-button chat-open-button" data-i18n="openChat">Abrir Chat</button>
+        <button id="discussion-audio-button" class="audio-control-button" title="Ativar som" aria-label="Ativar som" data-i18n="audioButton">Som</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tela de Chat -->
+  <section class="chat-screen hidden" id="chat-screen">
+    <div class="chat-container">
+      <div class="chat-header" id="chat-header">
+        <h2 data-i18n="chatTitle">CHAT DA CIDADE</h2>
+        <div class="chat-header-controls">
+          <button id="chat-fullscreen-btn" class="chat-fullscreen-btn" title="Expandir/Restaurar" data-i18n-title="expandRestore">⤢</button>
+          <button id="chat-close-button" class="chat-close-btn" title="Fechar" data-i18n-title="closeChat">×</button>
+        </div>
+      </div>
+
+      <div class="chat-body">
+        <div class="chat-main" id="chat-main">
+          <!-- Abas de Chat -->
+          <div class="chat-tabs" id="chat-tabs-container">
+            <button class="chat-tab active" data-tab="contacts" data-i18n="contactsTab">Contactos</button>
+            <button class="chat-tab" data-tab="groups" id="groups-tab-button" data-i18n="groupsTab">Condomínio</button>
+            <button class="chat-tab hidden" data-tab="orders" id="orders-tab-button" data-i18n="ordersTab">Ordens</button>
+          </div>
+
+          <!-- Painel de Máscara do Traidor (acessível em todo o chat) -->
+          <div class="mask-panel hidden" id="mask-panel">
+            <div class="mask-header">
+              <span data-i18n="traitorMaskTitle">Máscara do Traidor</span>
+              <button type="button" id="mask-panel-close-button" class="chat-close-btn mask-panel-close-btn" title="Fechar" data-i18n-title="closeMask">×</button>
+            </div>
+            <div class="mask-controls">
+              <input type="text" id="mask-name-input" class="chat-input" placeholder="Nome exibido (ex: João)" data-i18n-placeholder="maskNamePlaceholder" maxlength="30" />
+              <select id="mask-color-select" class="chat-input">
+                <option value="#fdd835" data-i18n="maskColorDetective">Cor do Detetive (Amarelo)</option>
+                <option value="#ff4c4c" data-i18n="maskColorAssassin">Cor do Assassino (Vermelho)</option>
+                <option value="#4caf50" data-i18n="maskColorDoctor">Cor do Médico (Verde)</option>
+                <option value="#9e9e9e" data-i18n="maskColorCivil">Cor do Civil (Cinza)</option>
+              </select>
+              <label class="mask-use-label"><input type="checkbox" id="mask-use-toggle" /> <span data-i18n="useMask">Usar máscara</span></label>
+              <button type="button" id="mask-remove-button" class="chat-send-btn" data-i18n="removeMask">Tirar Máscara</button>
+              <button id="mask-apply-button" class="chat-send-btn" data-i18n="apply">Aplicar</button>
+            </div>
+          </div>
+
+          <!-- Chat de Grupos -->
+          <div class="chat-tab-content" id="chat-groups">
+            <div class="group-title" id="group-title" data-i18n="groupsTab">Condomínio</div>
+            <div class="chat-messages" id="public-messages">
+              <!-- Mensagens do grupo Condomínio aparecem aqui -->
+            </div>
+            <div class="chat-input-area">
+              <input 
+                type="text" 
+                id="public-message-input" 
+                class="chat-input" 
+                placeholder="Digite uma mensagem..."
+                data-i18n-placeholder="publicMessagePlaceholder"
+                maxlength="200"
+              />
+              <button id="public-send-button" class="chat-send-btn" data-i18n="send">Enviar</button>
+              <div class="private-chat-buttons">
+                <label class="assassin-profile-toggle hidden" id="assassin-profile-toggle-label-public">
+                  <input type="checkbox" id="assassin-profile-toggle-public" />
+                  <span data-i18n="sendAsAssassin">Enviar como ASSASSINO</span>
+                </label>
+                <label class="doctor-profile-toggle hidden" id="doctor-profile-toggle-label-public">
+                  <input type="checkbox" id="doctor-profile-toggle-public" />
+                  <span data-i18n="sendAsDoctor">Enviar como MÉDICO</span>
+                </label>
+                <label class="detective-profile-toggle hidden" id="detective-profile-toggle-label-public">
+                  <input type="checkbox" id="detective-profile-toggle-public" />
+                  <span data-i18n="sendAsDetective">Enviar como DETETIVE</span>
+                </label>
+                <label class="traitor-profile-toggle hidden" id="traitor-profile-toggle-label-public">
+                  <input type="checkbox" id="traitor-profile-toggle-public" />
+                  <span data-i18n="sendAsTraitor">Enviar como TRAIDOR</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat de Contactos -->
+          <div class="chat-tab-content active" id="chat-contacts">
+            <div class="contacts-list-view" id="contacts-list-view">
+              <div class="private-recipient-header" data-i18n="contactsTab">Contactos</div>
+              <div id="chat-conversation-list" class="private-recipient-list"></div>
+            </div>
+            <div class="private-chat-view hidden" id="private-chat-view">
+              <div class="private-chat-header">
+                <button type="button" id="chat-back-button" class="private-recipient-back hidden">← Voltar</button>
+                <div id="private-recipient-label" class="private-recipient-label" data-i18n="selectContact">Selecione um contato para iniciar</div>
+              </div>
+              <div class="chat-messages" id="private-messages">
+                <!-- Mensagens privadas aparecem aqui -->
+              </div>
+              <div class="chat-input-area private-chat-input-area">
+                <input 
+                  type="text" 
+                  id="private-message-input" 
+                  class="chat-input" 
+                  placeholder="Digite uma mensagem privada..."
+                  data-i18n-placeholder="privateMessagePlaceholder"
+                  maxlength="200"
+                  disabled
+                />
+                <div class="private-chat-buttons">
+                  <label class="assassin-profile-toggle hidden" id="assassin-profile-toggle-label">
+                    <input type="checkbox" id="assassin-profile-toggle" />
+                    <span data-i18n="sendAsAssassin">Enviar como ASSASSINO</span>
+                  </label>
+                  <label class="doctor-profile-toggle hidden" id="doctor-profile-toggle-label">
+                    <input type="checkbox" id="doctor-profile-toggle" />
+                    <span data-i18n="sendAsDoctor">Enviar como MÉDICO</span>
+                  </label>
+                  <label class="detective-profile-toggle hidden" id="detective-profile-toggle-label">
+                    <input type="checkbox" id="detective-profile-toggle" />
+                    <span data-i18n="sendAsDetective">Enviar como DETETIVE</span>
+                  </label>
+                  <label class="traitor-profile-toggle hidden" id="traitor-profile-toggle-label">
+                    <input type="checkbox" id="traitor-profile-toggle" />
+                    <span data-i18n="sendAsTraitor">Enviar como TRAIDOR</span>
+                  </label>
+                  <button id="private-send-button" class="chat-send-btn" disabled data-i18n="send">Enviar</button>
+                </div>
+              </div>
+            </div>
+            <div class="recruitment-area" id="recruitment-area" style="display: none;">
+              <button id="recruit-traitor-button" class="recruitment-btn" data-i18n="recruitTraitor">Recrutar Traidor</button>
+            </div>
+          </div>
+
+          <!-- Fullscreen Private Chat View -->
+          <div class="private-chat-fullscreen hidden" id="private-chat-fullscreen">
+            <div class="private-chat-fullscreen-header">
+              <button type="button" id="private-chat-back-btn" class="private-chat-back-btn">← Voltar</button>
+              <div class="private-chat-fullscreen-title" id="private-chat-fullscreen-title">Conversa Privada</div>
+              <div class="private-chat-fullscreen-placeholder"></div>
+            </div>
+            <div class="chat-messages" id="private-messages-fullscreen">
+              <!-- Mensagens privadas fullscreen aparecem aqui -->
+            </div>
+            <div class="chat-input-area">
+              <input 
+                type="text" 
+                id="private-message-input-fullscreen" 
+                class="chat-input" 
+                placeholder="Digite uma mensagem privada..."
+                data-i18n-placeholder="privateMessagePlaceholder"
+                maxlength="200"
+              />
+              <div class="private-chat-buttons">
+                <label class="assassin-profile-toggle hidden" id="assassin-profile-toggle-label-fullscreen">
+                  <input type="checkbox" id="assassin-profile-toggle-fullscreen" />
+                  <span data-i18n="sendAsAssassin">Enviar como ASSASSINO</span>
+                </label>
+                <label class="doctor-profile-toggle hidden" id="doctor-profile-toggle-label-fullscreen">
+                  <input type="checkbox" id="doctor-profile-toggle-fullscreen" />
+                  <span data-i18n="sendAsDoctor">Enviar como MÉDICO</span>
+                </label>
+                <label class="detective-profile-toggle hidden" id="detective-profile-toggle-label-fullscreen">
+                  <input type="checkbox" id="detective-profile-toggle-fullscreen" />
+                  <span data-i18n="sendAsDetective">Enviar como DETETIVE</span>
+                </label>
+                <label class="traitor-profile-toggle hidden" id="traitor-profile-toggle-label-fullscreen">
+                  <input type="checkbox" id="traitor-profile-toggle-fullscreen" />
+                  <span data-i18n="sendAsTraitor">Enviar como TRAIDOR</span>
+                </label>
+                <button id="private-send-button-fullscreen" class="chat-send-btn" data-i18n="send">Enviar</button>
+              </div>
+              <!-- Painel de Máscara do Traidor para fullscreen -->
+              <div class="mask-panel hidden" id="mask-panel-fullscreen">
+                <div class="mask-header">
+                  <span data-i18n="traitorMaskTitle">Máscara do Traidor</span>
+                  <button type="button" id="mask-panel-close-button-fullscreen" class="chat-close-btn mask-panel-close-btn" title="Fechar" data-i18n-title="closeMask">×</button>
+                </div>
+                <div class="mask-controls">
+                  <input type="text" id="mask-name-input-fullscreen" class="chat-input" placeholder="Nome exibido (ex: João)" data-i18n-placeholder="maskNamePlaceholder" maxlength="30" />
+                  <select id="mask-color-select-fullscreen" class="chat-input">
+                    <option value="#fdd835" data-i18n="maskColorDetective">Cor do Detetive (Amarelo)</option>
+                    <option value="#ff4c4c" data-i18n="maskColorAssassin">Cor do Assassino (Vermelho)</option>
+                    <option value="#4caf50" data-i18n="maskColorDoctor">Cor do Médico (Verde)</option>
+                    <option value="#9e9e9e" data-i18n="maskColorCivil">Cor do Civil (Cinza)</option>
+                  </select>
+                  <label class="mask-use-label"><input type="checkbox" id="mask-use-toggle-fullscreen" /> <span data-i18n="useMask">Usar máscara</span></label>
+                  <button type="button" id="mask-remove-button-fullscreen" class="chat-send-btn" data-i18n="removeMask">Tirar Máscara</button>
+                  <button id="mask-apply-button-fullscreen" class="chat-send-btn" data-i18n="apply">Aplicar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painel de Ordens do Assassino para o Traidor -->
+      <div class="chat-tab-content hidden" id="chat-orders">
+        <div class="orders-panel" id="orders-panel">
+          <div class="orders-header" data-i18n="ordersForTraitor">Ordens para o Traidor</div>
+          <div class="orders-display" id="orders-display">
+            <!-- Ordens aparecem aqui -->
+          </div>
+        </div>
+        <div class="chat-input-area" id="orders-input-area" style="display: none;">
+          <input 
+            type="text" 
+            id="order-input" 
+            class="chat-input" 
+            placeholder="Digite uma ordem para o Traidor..."
+            data-i18n-placeholder="orderPlaceholder"
+            maxlength="200"
+          />
+          <button id="order-send-button" class="chat-send-btn" data-i18n="sendOrder">Enviar Ordem</button>
+        </div>
+
+        <!-- mask panel moved to private chat input area -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Modal de Recrutamento do Traidor -->
+  <div class="recruitment-modal hidden" id="recruitment-modal">
+    <div class="recruitment-modal-content">
+      <div class="recruitment-modal-header" data-i18n="recruitmentProposal">PROPOSTA DE RECRUTAMENTO</div>
+      <div class="recruitment-modal-message" id="recruitment-message" data-i18n="recruitmentMessage">
+        Você foi convidado para se unir ao Traidor. Aceita?
+      </div>
+      <div class="recruitment-modal-buttons">
+        <button id="accept-recruitment" class="recruitment-accept-button" data-i18n="accept">Aceitar</button>
+        <button id="decline-recruitment" class="recruitment-decline-button" data-i18n="decline">Recusar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tela de Vitória -->
+  <section class="victory-screen hidden" id="victory-screen">
+    <div class="victory-bg"></div>
+    <div class="victory-content">
+      <div class="victory-title" id="victory-title" data-i18n="victoryTitle">CIVIS VENCEM</div>
+      <div class="victory-players-list" id="victory-players-list">
+        <!-- Lista de vencedores -->
+      </div>
+      <button id="victory-replay-button" class="victory-button" data-i18n="returnToLobby">Voltar ao Lobby</button>
+    </div>
+  </section>
+
+  <!-- TV Discovery Modal -->
+  <div id="tv-modal" class="hidden" style="position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,0.6);z-index:9999;">
+    <div style="background:#111;color:#fff;padding:20px;border-radius:8px;max-width:640px;width:90%;">
+      <h2 style="margin:0 0 12px;" data-i18n="tvModalTitle">Connect to TV</h2>
+      <p style="margin-bottom:12px;font-size:14px;color:#ccc;" data-i18n="tvModalDescription">Generate a code and paste it into the TV page to connect as a spectator.</p>
+
+      <div style="display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:12px;flex-wrap:wrap;">
+        <div style="background:#222;padding:12px;border-radius:6px;min-width:180px;text-align:center;color:#fff;">
+          <span data-i18n="tvModalCodeLabel">Room Code:</span> <strong id="tv-code-display">—</strong>
+        </div>
+        <button id="tv-copy-code-button" class="start-button" data-i18n="copy">Copy</button>
+      </div>
+
+      <div style="margin-bottom:12px;text-align:center;line-height:1.4;">
+        <div style="background:#111;padding:12px;border-radius:6px;word-break:break-all;color:#4aa1ff;">https://voooldada.github.io/A-Liar-WithinTV/</div>
+        <p id="tv-link-instruction" style="margin:10px 0 0;font-size:13px;color:#ccc;" data-i18n="tvModalInstruction">Copy or type this link on your PC/TV browser and paste the room code on the page.</p>
+      </div>
+
+      <div id="tv-scanner-status" class="tv-scanner-status">Ready</div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:10px;">
+        <button id="tv-close-btn" class="leave-button" data-i18n="close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

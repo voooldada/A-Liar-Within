@@ -1,0 +1,742 @@
+/* ============================================
+   RESPONSIVE DESIGN - A Liar Within v3
+   Suporta Mobile, Tablet, iPad e Desktop
+   ============================================ */
+
+/* ===== MOBILE (até 480px) ===== */
+@media (max-width: 480px) {
+  /* Layout geral */
+  html, body {
+    font-size: 14px;
+  }
+
+  .hero-screen {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .language-switcher {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-bottom: 0.5rem;
+  }
+
+  .lang-button {
+    min-width: 35px;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  /* City Screen */
+  .city-buildings {
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .player-house {
+    width: min(140px, 18vw);
+    height: 60vh;
+  }
+
+  .player-house::before,
+  .player-house .roof {
+    width: 80px;
+    height: 24px;
+  }
+
+  .player-house .windows {
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  .city-ui {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+
+  .city-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .room-info,
+  .players-count {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .current-room-code,
+  .players-count-number {
+    font-size: 1.1rem;
+  }
+
+  .city-status {
+    min-width: auto;
+    width: 90%;
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .city-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
+  }
+
+  .start-button,
+  .leave-button {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+
+  /* Login Screen */
+  .login-panel {
+    width: min(90vw, 380px);
+    padding: 1.2rem 1rem;
+  }
+
+  .login-panel h2 {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+  }
+
+  .text-input {
+    padding: 0.85rem 0.9rem;
+    font-size: 1rem;
+  }
+
+  .play-button,
+  .action-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  /* Game Screens */
+  .role-reveal-content {
+    padding: 2rem 1.2rem;
+    border-radius: 15px;
+  }
+
+  .role-reveal-panel {
+    max-width: 100%;
+  }
+
+  .role-reveal-title {
+    font-size: 1.2rem;
+  }
+
+  .role-reveal-badge {
+    font-size: 1.8rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .role-reveal-description {
+    font-size: 0.95rem;
+    min-height: 50px;
+  }
+
+  .role-ready-button {
+    padding: 0.8rem 2rem;
+    font-size: 0.9rem;
+  }
+
+  /* Chat Screen */
+  .chat-screen {
+    width: calc(100vw - 20px);
+    height: calc(100vh - 40px);
+    right: 10px;
+    bottom: 10px;
+    border-radius: 14px;
+  }
+
+  .chat-header h2 {
+    font-size: 0.95rem;
+  }
+
+  .chat-tab {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+
+  .chat-messages {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .chat-message {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .chat-input-area {
+    padding: 10px;
+    flex-direction: column;
+  }
+
+  /* Night Screen */
+  .night-title {
+    font-size: 1.8rem;
+  }
+
+  .night-timer {
+    font-size: 3.5rem;
+  }
+
+  /* Voting and Action Screens */
+  .assassin-content,
+  .doctor-content,
+  .detective-content,
+  .voting-content {
+    max-width: 95%;
+    padding: 1rem;
+  }
+
+  .players-grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .player-button {
+    padding: 0.8rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .assassin-title,
+  .doctor-title,
+  .detective-title {
+    font-size: 1.6rem;
+  }
+
+  /* Day Discussion */
+  .day-discussion-screen .day-building {
+    width: 70px;
+    height: 140px;
+  }
+
+  .discussion-title {
+    font-size: 1.5rem;
+  }
+
+  .discussion-buttons {
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 100%;
+  }
+
+  .discussion-button {
+    width: 100%;
+    padding: 0.7rem 1.5rem;
+  }
+}
+
+/* ===== TABLET PEQUENO (481px - 768px) ===== */
+@media (min-width: 481px) and (max-width: 768px) {
+  /* Layout geral */
+  html, body {
+    font-size: 15px;
+  }
+
+  .hero-screen {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: clamp(2.8rem, 6vw, 4rem);
+  }
+
+  /* City Screen */
+  .city-buildings {
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .player-house {
+    width: min(200px, 20vw);
+    height: 70vh;
+  }
+
+  .player-house::before,
+  .player-house .roof {
+    width: 110px;
+    height: 30px;
+  }
+
+  .city-ui {
+    padding: 1.2rem;
+    gap: 0.8rem;
+  }
+
+  .city-header {
+    flex-direction: row;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .room-info,
+  .players-count {
+    padding: 0.8rem 1.2rem;
+  }
+
+  .city-status {
+    min-width: 320px;
+    padding: 1.2rem;
+  }
+
+  .city-buttons {
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .start-button,
+  .leave-button {
+    padding: 0.8rem 2rem;
+    font-size: 0.9rem;
+  }
+
+  /* Login Screen */
+  .login-panel {
+    width: min(85vw, 420px);
+    padding: 1.5rem 1.2rem;
+  }
+
+  .login-panel h2 {
+    font-size: clamp(1.8rem, 4.5vw, 2.4rem);
+  }
+
+  .text-input {
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+  }
+
+  /* Game Screens */
+  .role-reveal-content {
+    padding: 2.5rem 2rem;
+    max-width: 600px;
+  }
+
+  .role-reveal-inner {
+    gap: 1.5rem;
+  }
+
+  .role-reveal-panel {
+    max-width: 280px;
+  }
+
+  .role-reveal-badge {
+    font-size: 2rem;
+    padding: 0.9rem 1.8rem;
+  }
+
+  /* Chat Screen */
+  .chat-screen {
+    width: 500px;
+    height: calc(100vh - 60px);
+  }
+
+  /* Night Screen */
+  .night-title {
+    font-size: 2rem;
+  }
+
+  .night-timer {
+    font-size: 4rem;
+  }
+
+  /* Action Screens */
+  .assassin-content,
+  .doctor-content,
+  .detective-content,
+  .voting-content {
+    max-width: 520px;
+    padding: 1.5rem;
+  }
+
+  .players-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+
+  .assassin-title,
+  .doctor-title,
+  .detective-title {
+    font-size: 1.8rem;
+  }
+
+  /* Day Discussion */
+  .day-discussion-screen .day-building {
+    width: 90px;
+    height: 180px;
+  }
+
+  .discussion-buttons {
+    flex-direction: row;
+    gap: 1.2rem;
+  }
+
+  .discussion-button {
+    padding: 0.8rem 2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ===== TABLET GRANDE / iPad (769px - 1024px) ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Layout geral */
+  html, body {
+    font-size: 16px;
+  }
+
+  .hero-screen {
+    padding: 2rem;
+  }
+
+  .title {
+    font-size: clamp(3.5rem, 7vw, 5rem);
+  }
+
+  /* City Screen */
+  .city-buildings {
+    gap: 3rem;
+    height: 80vh;
+  }
+
+  .player-house {
+    width: min(240px, 22vw);
+    height: 75vh;
+  }
+
+  .player-house::before,
+  .player-house .roof {
+    width: 130px;
+    height: 34px;
+  }
+
+  .city-ui {
+    padding: 1.5rem;
+  }
+
+  .city-header {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+
+  .city-status {
+    min-width: 380px;
+    padding: 1.5rem 2rem;
+  }
+
+  .city-buttons {
+    gap: 1.5rem;
+  }
+
+  .start-button,
+  .leave-button {
+    padding: 1rem 2.5rem;
+    font-size: 0.95rem;
+  }
+
+  /* Login Screen */
+  .login-panel {
+    width: min(80vw, 450px);
+    padding: 2rem 1.5rem;
+  }
+
+  .login-panel h2 {
+    font-size: 2.4rem;
+  }
+
+  .text-input {
+    padding: 1rem 1.2rem;
+    font-size: 1.05rem;
+  }
+
+  /* Game Screens */
+  .role-reveal-content {
+    padding: 3rem;
+    max-width: 700px;
+  }
+
+  .role-reveal-inner {
+    gap: 2rem;
+  }
+
+  .role-reveal-panel {
+    max-width: 320px;
+  }
+
+  .role-assassin-image {
+    width: 300px;
+  }
+
+  .role-reveal-badge {
+    font-size: 2.2rem;
+    padding: 1rem 2rem;
+  }
+
+  /* Chat Screen */
+  .chat-screen {
+    width: 520px;
+    height: 600px;
+  }
+
+  /* Night Screen */
+  .night-title {
+    font-size: 2.2rem;
+  }
+
+  .night-timer {
+    font-size: 4.5rem;
+  }
+
+  /* Action Screens */
+  .assassin-content,
+  .doctor-content,
+  .detective-content,
+  .voting-content {
+    max-width: 550px;
+    padding: 2rem;
+  }
+
+  .players-grid {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .assassin-title,
+  .doctor-title,
+  .detective-title {
+    font-size: 2rem;
+  }
+
+  /* Day Discussion */
+  .day-discussion-screen .day-city-buildings {
+    gap: 2.5rem;
+    width: 90%;
+  }
+
+  .day-discussion-screen .day-building {
+    width: 100px;
+    height: 200px;
+  }
+
+  .discussion-buttons {
+    gap: 1.5rem;
+  }
+}
+
+/* ===== DESKTOP (1025px+) ===== */
+@media (min-width: 1025px) {
+  /* Layout geral */
+  html, body {
+    font-size: 16px;
+  }
+
+  .hero-screen {
+    padding: 2rem;
+  }
+
+  .title {
+    font-size: clamp(4rem, 8vw, 5.5rem);
+  }
+
+  /* City Screen */
+  .city-buildings {
+    gap: 6rem;
+    height: 85vh;
+  }
+
+  .player-house {
+    width: min(280px, 22vw);
+    height: 80vh;
+  }
+
+  .city-ui {
+    padding: 2rem;
+  }
+
+  .city-header {
+    gap: 2rem;
+  }
+
+  .city-status {
+    min-width: 400px;
+    padding: 1.5rem 2rem;
+  }
+
+  .city-buttons {
+    gap: 2rem;
+  }
+
+  .start-button,
+  .leave-button {
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+  }
+
+  /* Login Screen */
+  .login-panel {
+    width: min(85vw, 500px);
+    padding: 2rem 1.8rem;
+  }
+
+  .login-panel h2 {
+    font-size: 2.7rem;
+  }
+
+  /* Game Screens */
+  .role-reveal-content {
+    padding: 3rem;
+    max-width: 800px;
+  }
+
+  .role-reveal-inner {
+    gap: 3rem;
+  }
+
+  .role-assassin-image {
+    width: 320px;
+  }
+
+  /* Chat Screen */
+  .chat-screen {
+    width: 420px;
+    height: 600px;
+    right: 20px;
+    bottom: 20px;
+  }
+
+  /* Night Screen */
+  .night-title {
+    font-size: 2.5rem;
+  }
+
+  .night-timer {
+    font-size: 5rem;
+  }
+
+  /* Action Screens */
+  .assassin-content,
+  .doctor-content,
+  .detective-content,
+  .voting-content {
+    max-width: 600px;
+    padding: 2rem;
+  }
+
+  .players-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Day Discussion */
+  .day-discussion-screen .day-city-buildings {
+    gap: 4rem;
+    width: 95%;
+  }
+
+  .discussion-buttons {
+    gap: 2rem;
+  }
+}
+
+/* ===== LANDSCAPE vs PORTRAIT ===== */
+@media (orientation: landscape) and (max-height: 600px) {
+  .hero-screen {
+    min-height: auto;
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .city-buildings {
+    height: 100vh;
+    gap: 2rem;
+  }
+
+  .player-house {
+    height: 80vh;
+  }
+
+  .chat-screen {
+    max-height: calc(100vh - 20px);
+  }
+}
+
+/* ===== TABLETS ESPECÍFICAS ===== */
+
+/* iPad Pro 11" */
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+  .title {
+    font-size: 4.5rem;
+  }
+
+  .city-status {
+    min-width: 450px;
+  }
+
+  .role-reveal-content {
+    max-width: 750px;
+  }
+}
+
+/* iPad normal (768x1024) */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .title {
+    font-size: 4rem;
+  }
+
+  .city-buildings {
+    gap: 2.5rem;
+  }
+
+  .player-house {
+    width: 210px;
+  }
+}
+
+/* Samsung Galaxy Tab */
+@media (min-width: 600px) and (max-width: 840px) {
+  .role-reveal-content {
+    max-width: 550px;
+  }
+
+  .assassin-content,
+  .doctor-content,
+  .detective-content {
+    max-width: 480px;
+  }
+
+  .chat-screen {
+    width: 450px;
+  }
+}
+
+/* ===== PRINT / IMPRESSÃO ===== */
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  .chat-screen,
+  .hidden,
+  .audio-control-button {
+    display: none !important;
+  }
+}
